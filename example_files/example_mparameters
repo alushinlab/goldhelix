@@ -1,0 +1,81 @@
+Control parameter file to run Frealign
+======================================
+
+This file must me kept in the project working directory from which the refinement scripts are launched.
+
+Note: Please make sure that project and scratch directories (if specified) are accessible by all sub-processes that are run on cluster nodes.
+
+# Computer-specific setting
+cluster_type         none	! Set to "sge", "lsf", "slurm", "stampede", "pbs" or "condor" when running on a cluster, otherwise set to "none".
+nprocessor_ref       10		! Number of CPUs to use during refinement.
+nprocessor_rec       10		! Number of CPUs to use during reconstruction.
+mem_per_cpu       5366		! Memory available per CPU (in MB).
+
+# Refinement-specific parameters
+MODE                  1		! 1, 2, 3 or 4. Refinement mode, normally 1. Set to 2 for additional search.
+start_process         6 	! First cycle to execute. Output files from previous cycle (n-1) required.
+end_process           6 	! Last cycle to execute.
+res_low_refinement  500.0	! Low-resolution limit for particle alignment. Set to particle dimention or larger.
+res_high_refinement  10.0	! High-resolution limit for particle alignment.
+res_high_class       10.0	! High-resolution limit to calculate class membership (OCC).
+nclasses              1		! Number of classes to use.
+DANG                100.0	! Mode 3, 4 and 5: Angular step for orientational search.
+ITMAX               10		! Mode 2 and 4: Number of repetitions of grid search with random starting angles.
+
+# Dataset-specific parameters
+data_input           allADP_myo6	! Root name for parameter and map files.
+raw_images	    combined_stack.mrc
+image_contrast        N		! N or P. Set to N if particles are dark on bright background, otherwise set to P.
+outer_radius        40.0	! Outer radius of spherical particle mask in Angstrom.
+inner_radius          0.0	! Inner radius of spherical particle mask in Angstrom.
+mol_mass           2700.0	! Molecular mass in kDa of particle or helical segment.
+Symmetry              H		! Symmetry of particle.
+ALPHA               -166.69426	! Helical twist angle in deg.
+RISE                  28.05583	! Helical rise in Angstrom.
+NSUBUNITS            6		! Number of unique subunits in one segment.
+NSTARTS               1		! Number of helocal starts.
+STIFFNESS         	0.0	! Stregth of straightness restraint (small value = strong restraint). 
+occ_helical           F		! T or F. Set to T to force the same class membership (OCC) value of all segments within one helical filament. 
+pix_size              1.27	! Pixel size of particle in Angstrom.
+dstep                 1.27	! Pixel size of detector in micrometer.
+Aberration            2.0	! Sherical aberration coefficient in millimeter.
+Voltage             200.0	! Beam accelleration voltage in kilovolt.
+Amp_contrast          0.07	! Amplitude contrast.
+
+# Expert parameters (for expert users)
+XSTD                  0.0	! Tighter masking of 3D map (XSTD > 0) or particles (XSTD < 0).
+PBC                   2.0	! Discriminate particles with different scores during reconstruction. Small values (5 - 10) discriminate more than large values (50 - 100).
+parameter_mask   "1 1 1 1 1"	! Five flags of 0 or 1 (e.g. 1 1 1 1 1). Determines which parameters are refined (PSI, THETA, PHI, SHX, SHY).
+refineangleinc        4		! When larger than 1: Alternate between refinement of OCC and OCC + angles.
+refineshiftinc        4		! When larger than 1: Alternate between refinement of OCC and OCC + angles + shifts.
+res_reconstruction    2.54	! High-resolution limit of reconstruction. Normally set to Nyquist limit.
+thresh_reconst        0.0	! Particles with scores below this value will not be included in the reconstruction.
+thresh_refine        100.0	! Mode 4: Score threshold above which search will not be performed.
+nbootstrap         1000		! Number of bootstrap volumes to calculate real-space variance map.
+FMAG                  F		! T or F. Set to T to refine particle magnification. Not recommended in most cases.
+FDEF                  F		! T or F. Set to T to refine defocus per micrograph. Not recommended in most cases.
+FASTIG                F		! T or F. Set to T to refine astigmatism. Not recommended in most cases.
+FPART                 F		! T or F. Set to T to refine defocus for each particle. Not recommended in most cases.
+FFILT                 T		! T or F. Set to T to apply optimal filter to reconstruction. Recommended in most cases.
+FMATCH                F		! T or F. Set to T to output matching projections. Only needed for diagnostics.
+FBEAUT                F		! T or F. Set to T to apply symmetry also in real space. Not needed in most cases.
+FBOOST                F		! T or F. Set to T to allow potential overfitting during refinement. Not recommended in most cases.
+RBfactor              0.0	! B-factor sharpening (when < 0) applied during refinement. Not recommended in most cases.
+beam_tilt_x           0.0	! Beam tilt in mrad along X-axis.
+beam_tilt_y           0.0	! Beam tilt in mrad along y-axis.
+mp_cpus               1		! Number of CPUs to use for each reconstruction job.
+restart_after_crash   F		! T or F. Set to T to restart job if it crashes.
+delete_scratch        T		! Delete intermediate files in scratch directory.
+qsub_string_ref  ""		! String to add to cluster jobs submitted for refinement (only for SGE, SLURM and PBS clusters).
+qsub_string_rec  ""		! String to add to cluster jobs submitted for reconstruction (only for SGE, SLURM and PBS clusters).
+first_particle        
+last_particle         
+frealign_bin_dir      
+scratch_dir           ../scratch
+
+# Masking parameters (for expert users)
+mask_file             
+mask_edge             30		! Width of cosine edge in pixels to add around mask. Set to 0 to leave mask unchanged.
+mask_outside_weight   0.0	! Factor to downweight density outside of mask (normally 0.0 - 1.0).
+mask_filt_res         0.0	! Filter radius (in A) oto low-pass filter density outside density. Set to 0.0 to skip filtering
+mask_filt_edge        30	! Width of cosine edge in reciprocal pixels to add to filter function.
