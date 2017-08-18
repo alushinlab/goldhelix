@@ -66,5 +66,4 @@ Basic protocol:
 
 Note that scripts will need to be modified to point to the correct paths for your workstation / cluster environment.
 
-Please contact Greg Alushin (galushin@rockefeller.edu) with questions, comments, or concerns. We are happy to help you get these scripts running!
-
+Please contact Greg Alushin (galushin [at] rockefeller [dot] edu) with questions, comments, or concerns.
